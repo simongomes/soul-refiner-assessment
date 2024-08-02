@@ -52,6 +52,17 @@ class UserService {
     const deleteUserData = await this.users.delete({ where: { id: userId }, select: { email: true, id: true } });
     return deleteUserData;
   }
+
+  public async manageGroups(userId: number, data: any) {
+    if (isEmpty(data)) throw new HttpException(400, "Groups don't exist");
+    
+    const groups = await this.users.update({
+      where: { id: userId },
+      data
+    })
+
+    return groups;
+  }
 }
 
 export default UserService;

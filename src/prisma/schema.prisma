@@ -11,7 +11,25 @@ generator client {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
   password String
+  groups   Member[]
+}
+
+model Member {
+  user_id  Int
+  user     User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  group_id Int
+  group    Group @relation(fields: [group_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, group_id])
+}
+
+model Group {
+  id    Int      @id @default(autoincrement())
+  name  String
+  users Member[]
+
+  @@index([name])
 }

@@ -60,6 +60,18 @@ class UsersController {
       next(error);
     }
   };
+
+  public manageGroups = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const data = req.body;
+      const userId = Number(req.params.id);
+      const groupData = await this.userService.manageGroups(userId, data);
+
+      res.status(200).json({ data: groupData, message: 'manageGroups' });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default UsersController;
